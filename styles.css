@@ -97,8 +97,13 @@ header b {
 
 }
 
+.button:hover{
+    border: 2px solid black;
+}
+
 .selected-button {
     background-color: rgb(58, 182, 255);
+    border: 2px solid black ;
 }
 
 
@@ -119,17 +124,6 @@ header b {
     margin-bottom: 12px;
 }
 
-/* SELECTED BLOCKS */
-.selected-blocks {
-    display: grid;
-    grid-template-columns: 3fr 1fr 1fr;
-    background-color: #0d4aad;
-    color: white;
-    border-radius: 28px;
-    padding: 16px 0px;
-    padding-left: 32px;
-    margin-bottom: 12px;
-}
 
 @media (max-width: 450px) {
     #main-header {
@@ -190,18 +184,11 @@ header b {
     }
 
     #display-centers .seprate-blocks {
-        display: flex;
-        flex-direction: column;
-        row-gap: 16px;
         text-align: center;
+        grid-template-columns: 1fr;
+        row-gap: 16px;
     }
 
-    .selected-blocks {
-        display: flex;
-        flex-direction: column;
-        row-gap: 16px;
-        text-align: center;
-    }
 
 }
 
@@ -263,16 +250,9 @@ header b {
     }
 
     #display-centers .seprate-blocks {
-        display: flex;
-        flex-direction: column;
-        row-gap: 16px;
         text-align: center;
+        grid-template-columns: 1fr;
+        row-gap: 16px;
     }
 
-    .selected-blocks {
-        display: flex;
-        flex-direction: column;
-        row-gap: 16px;
-        text-align: center;
-    }
 }

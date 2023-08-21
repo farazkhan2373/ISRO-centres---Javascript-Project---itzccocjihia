@@ -10,11 +10,11 @@ let centersList; // I will fetch my data in this
 async function fetchCenters() {
     const response = await fetch('https://isro.vercel.app/api/centres');
     const json = await response.json();
-    centersList = json.centres; // Storing the fetched data
+    centersList = json.centres; // Storing the fetched data in cetersList
 }
 
 async function showAllISROCenters() {
-    if (!centersList) {      // if centerList is undefine than this will be true hahaha and below if not fetched than fetch
+    if (!centersList) {      // if centerList is undefine than this will be !false -> true and below line will in action
         await fetchCenters(); // Fetching the data if not fetched
     }
 
@@ -31,8 +31,9 @@ function createElementsAndRender(list, className) {
     // CREATING PARENT BLOCK
     const separteblocksdiv = document.createElement("div");
     separteblocksdiv.classList.add(className);
-    
-    // CREATING CENTER KA DIV
+    separteblocksdiv.id = list.id;
+
+    // CREATING CENTER DIV
     const centerDiv = document.createElement("div");
     const h2Center = document.createElement("h2");
     h2Center.innerText = "CENTER";
@@ -44,7 +45,7 @@ function createElementsAndRender(list, className) {
     centerDiv.appendChild(h2Center);
     centerDiv.appendChild(h2CenterName);
     separteblocksdiv.appendChild(centerDiv);
- 
+
     //CREATING CITY DIV
     const cityDiv = document.createElement("div");
     const h2City = document.createElement("h2");
@@ -71,7 +72,7 @@ function createElementsAndRender(list, className) {
     stateDiv.appendChild(h2StateName);
     separteblocksdiv.appendChild(stateDiv);
 
-    // APPENDING PARENT DIV INTO HTML WALA DIV
+    // APPENDING PARENT DIV INTO HTML DIV
     displayCenters.appendChild(separteblocksdiv);
 
 }
@@ -107,108 +108,46 @@ centerBtn.addEventListener("click", () => {
 
 // INPUT BAR/SEARCH FUNCTIONALITY (MAIN EVENT LISTNER)
 
- inputBar.addEventListener("input", function(){
+inputBar.addEventListener("input", function () {
 
     let defaultBlock = document.querySelectorAll(".seprate-blocks");
-    let selectedBlock = document.querySelectorAll(".selected-blocks");
     let inputlowerCase = inputBar.value.toLowerCase();
 
-    function displayStyle(blockName, styleValue) {  // THIS WILL SET THE DISPLAY OF BLOCK NONE/GRID/FLEX
+    function displayStyle(blockName, styleValue) {  // THIS WILL SET THE DISPLAY OF BLOCK NONE/GRID/
         for (block of blockName) {
             block.style.display = styleValue;
         }
     }
 
+    function filterandDisplayCenters(location) {
+        if (inputBar.value !== "") {
+            displayStyle(defaultBlock, "none");
+
+            for (list of centersList) {
+                let selected = document.getElementById(list.id);
+
+                if (list[location].toLowerCase().includes(inputlowerCase)) {
+                    selected.style.display = "grid";
+                }
+            }
+        } else {
+            displayStyle(defaultBlock, "grid");
+        }
+    }
+
     // DISPLAY BLOCKS BY CITY NAME
     if (cityBtn.classList.contains("selected-button")) {
-
-        if (inputBar.value !== "") {
-            displayStyle(defaultBlock, "none");  // IF INPUT CONTANS SOME STRING THAN DEFAULT WILL NONE
-        }
-        else {
-            displayStyle(defaultBlock, "grid");
-            displayStyle(selectedBlock, "none");  // IF INPUT IS EMPTY WILL DISPLAY THE DEFAULT BLOCKS
-        }
-
-        // HERE WE ARE CHECKING IF INPUT MATCHES WITH OUR DATA IF YES THAN DISPLAY BLOCK BY CITY
-        for (list of centersList) {
-            if (inputlowerCase === list.Place.toLowerCase()) {
-
-                createElementsAndRender(list, "selected-blocks");
-            }
-
-            if (inputlowerCase !== list.Place.toLowerCase()) {
-                displayStyle(selectedBlock, "none");
-            }
-
-        }
-
+        filterandDisplayCenters("Place");
     }
 
-    // STATE BUTTON SELECTION
+    // DISPLAY BLOCKS BY STATE NAME
     if (stateBtn.classList.contains("selected-button")) {
-        if (inputBar.value !== "") {
-            displayStyle(defaultBlock, "none");
-        }
-        else {
-            displayStyle(defaultBlock, "grid");
-            displayStyle(selectedBlock, "none");
-        }
-        
-
-        if (inputlowerCase === "punjab" || inputlowerCase === "haryana") {
-            createElementsAndRender(centersList[0], "selected-blocks");
-        }
-
-        for (list of centersList) {
-
-            if (inputlowerCase === list.State.toLowerCase()) {
-
-                createElementsAndRender(list, "selected-blocks");
-            }
-
-            if (inputlowerCase !== list.State.toLowerCase()) {
-                displayStyle(selectedBlock, "none");
-            }
-
-        }
+        filterandDisplayCenters("State");
     }
 
-
-    // CENTER BUTTON SELECTION
+    // DISPLAY BLOCKS BY CENTER NAME
     if (centerBtn.classList.contains("selected-button")) {
-
-        if (inputBar.value !== "") {
-            displayStyle(defaultBlock, "none");
-        }
-        else {
-            displayStyle(defaultBlock, "grid");
-            displayStyle(selectedBlock, "none");
-        }
-
-        for (list of centersList) {
-
-            if (inputlowerCase === list.name.toLowerCase()) {
-
-                createElementsAndRender(list, "selected-blocks");
-            }
-
-            if (inputlowerCase !== list.name.toLowerCase()) {
-                displayStyle(selectedBlock, "none");
-            }
-
-        }
-
+        filterandDisplayCenters("name");
     }
 
 })
-
-
-
-
-
-
-
-
-
-
