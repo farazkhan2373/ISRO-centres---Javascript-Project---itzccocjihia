@@ -151,3 +151,14 @@ inputBar.addEventListener("input", function () {
     }
 
 })
+
+// {
+//     center: [
+    // {
+//         id: 1;
+//         name: center name
+//         Place: city name
+//         State: kerala
+//     ]
+    // },
+// }

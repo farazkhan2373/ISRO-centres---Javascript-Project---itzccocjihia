@@ -187,6 +187,7 @@ header b {
         text-align: center;
         grid-template-columns: 1fr;
         row-gap: 16px;
+        padding: 8px;
     }
 
 
@@ -253,6 +254,7 @@ header b {
         text-align: center;
         grid-template-columns: 1fr;
         row-gap: 16px;
+        
     }
 
 }
